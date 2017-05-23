@@ -51,7 +51,7 @@ const ReactDataGrid = React.createClass({
 
   propTypes: {
     rowHeight: React.PropTypes.number.isRequired,
-    headerRowHeight: React.PropTypes.number,
+    headerRowHeight: React.PropTypes.number, //
     headerFiltersHeight: React.PropTypes.number,
     minHeight: React.PropTypes.number.isRequired,
     minWidth: React.PropTypes.number,
@@ -620,12 +620,45 @@ const ReactDataGrid = React.createClass({
 
   getRowOffsetHeight(): number {
     let offsetHeight = 0;
-    this.getHeaderRows().forEach((row) => offsetHeight += parseFloat(row.height, 10) );
+    this.getHeaderRows().forEach(
+      (row) => offsetHeight += parseFloat(row.height, 10)
+    );
     return offsetHeight;
   },
 
+  getMaxNumberColumnRows(columns): number {
+    let max = 1;
+    columns.forEach(
+      (item, idx) => {
+        if (item.name instanceof Array) {
+          if(item.name.length > max) {
+            max = item.name.length;
+          }
+        }
+      }
+    )
+    return max;
+  },
+
   getHeaderRows(): Array<{ref: Function; height: number;}> {
-    let rows = [{ ref: (node) => this.row = node, height: this.props.headerRowHeight || this.props.rowHeight, rowType: 'header' }];
+
+
+
+    let max = this.getMaxNumberColumnRows(this.props.columns);
+    console.info('max is ' + max)
+    // [{"key":"id","name":"ID","sortable":true},{"key":"title","name":"Title","sortable":true},{"key":"count","name":["one","two","threeX","fourYY"],"sortable":true}]
+
+    let rowHeight = (max > 1) ? this.props.rowHeight * max : this.props.headerRowHeight
+
+    console.info(' rowHeight ' + rowHeight)
+
+    let rows = [
+        {
+          ref: (node) => this.row = node,
+          height: rowHeight || this.props.rowHeight,
+          rowType: 'header'
+        }
+      ];
     if (this.state.canFilter === true) {
       rows.push({
         ref: (node) => this.filterRow = node,
@@ -635,6 +668,11 @@ const ReactDataGrid = React.createClass({
         rowType: 'filter'
       });
     }
+
+
+
+    // debugger;
+
     return rows;
   },
   getInitialSelectedRows: function() {

@@ -3,14 +3,40 @@ const ReactDOM      = require('react-dom');
 const joinClasses    = require('classnames');
 const ExcelColumn    = require('./PropTypeShapes/ExcelColumn');
 const ResizeHandle   = require('./ResizeHandle');
+const helper   = require('./cells/headerCells/HeaderCellHelper');
 require('../../../themes/react-data-grid-header.css');
 
 const PropTypes      = React.PropTypes;
 
+
+
+
+
 function simpleCellRenderer(objArgs: {column: {name: string}}): ReactElement {
-  let headerText = objArgs.column.rowType === 'header' ? objArgs.column.name : '';
+
+  // let headerText = "";
+
+
+  let headerText = helper.convertHeaderText(objArgs.column);
+
+
+  // //if array then stack them as a list
+  // if (objArgs.column.name instanceof Array) {
+  //   headerText = <ul>
+  //     { objArgs.column.name.map(item => <li>{item}</li>) }
+  //   </ul>;
+  //
+  // }else {
+  //   headerText = objArgs.column.rowType === 'header' ? objArgs.column.name : '';
+  // }
+
   return <div className="widget-HeaderCell__value">{headerText}</div>;
 }
+
+
+
+
+
 
 const HeaderCell = React.createClass({
 
@@ -23,7 +49,16 @@ const HeaderCell = React.createClass({
     className: PropTypes.string
   },
 
-  getDefaultProps(): {renderer: ReactComponent | (props: {column: {name: string}}) => ReactElement} {
+  /**
+   * React method. Pre-es6 method. Like it says it just defines some default props
+   *
+   * @returns {{renderer: simpleCellRenderer}}
+   */
+  getDefaultProps(): {
+
+    //must you be so cruel and use bitwise operations here?
+    
+    renderer: ReactComponent | (props: {column: {name: string}}) => ReactElement} {
     return {
       renderer: simpleCellRenderer
     };

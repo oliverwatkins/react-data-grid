@@ -4,7 +4,11 @@ const DEFINE_SORT = {
   ASC: 'ASC',
   DESC: 'DESC',
   NONE: 'NONE'
-};
+}
+
+const helper         = require('./HeaderCellHelper');
+
+
 
 const SortableHeaderCell = React.createClass({
   propTypes: {
@@ -50,12 +54,15 @@ const SortableHeaderCell = React.createClass({
       'react-grid-HeaderCell-sortable--descending': this.props.sortDirection === 'DESC'
     });
 
+
+    let headerText = helper.convertHeaderText(this.props.column);
+
     return (
       <div className={className}
         onClick={this.onClick}
         style={{cursor: 'pointer'}}>
         <span className="pull-right">{this.getSortByText()}</span>
-        {this.props.column.name}
+        {headerText}
       </div>
     );
   }
