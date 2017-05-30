@@ -93,11 +93,6 @@ const HeaderRow = React.createClass({
     return <SortableHeaderCell columnKey={column.key} onSort={this.props.onSort} sortDirection={sortDirection}/>;
   },
 
-  /**
-   * return renderer
-   * @param column
-   * @returns {*}
-   */
   getHeaderRenderer(column) {
     let renderer;
     if (column.headerRenderer && !this.props.filterable) {
@@ -127,10 +122,6 @@ const HeaderRow = React.createClass({
     };
   },
 
-  /**
-   * Get header cells, can be BaseHeaderCell or  DraggableHeaderCell??
-   * @returns {Array.<*>}
-   */
   getCells(): Array<HeaderCell> {
     let cells = [];
     let lockedCells = [];
@@ -142,7 +133,7 @@ const HeaderRow = React.createClass({
       }
       let HeaderCell = column.draggable ? this.props.draggableHeaderCell : BaseHeaderCell;
       let cell = (
-        <HeaderCell //can be HeaderCell or
+        <HeaderCell 
           ref={(node) => this.cells[i] = node}
           key={i}
           height={this.props.height}

@@ -1,6 +1,6 @@
 {
-  "name": "react-data-grid-eppsta",
-  "version": "1.0.2",
+  "name": "react-data-grid",
+  "version": "2.0.1",
   "description": "Data grid for React",
   "main": "src/index.js",
   "scripts": {
@@ -12,6 +12,10 @@
     "dev-server": "node webpack-dev-server.js",
     "beforepublish": "lerna run beforepublish",
     "eslint": "eslint -f unix packages/react-data-grid/src/** packages/react-data-grid-addons/src/**"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/adazzle/react-data-grid.git"
   },
   "keywords": [
     "react",
@@ -101,7 +105,7 @@
     "webpack": "^1.12.10",
     "webpack-dev-server": "^1.16.2"
   },
-  "author": "adazzle/owatkins",
+  "author": "adazzle",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/adazzle/react-data-grid/issues"
